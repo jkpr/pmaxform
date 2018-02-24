@@ -257,7 +257,7 @@ def process_range_question_type(row):
     new_dict = row.copy()
     parameters = _parameters(new_dict.get('parameters', ''))
     parameters_map = {'start': 'start', 'end': 'end', 'step': 'step', 'start-label': 'start-label', 'end-label': 'end-label'}
-    defaults = {'start': '1', 'end': '10', 'step': '1', 'start-label': 'Strongly Disagree', 'end-label': 'Strongly Agree'}
+    defaults = {'start': '1', 'end': '10', 'step': '1', 'start-label': '', 'end-label': ''}
     number_parameters_map = {'start': 'start', 'end': 'end', 'step': 'step'}
     params = {}
 
