@@ -256,8 +256,9 @@ def process_range_question_type(row):
 
     new_dict = row.copy()
     parameters = _parameters(new_dict.get('parameters', ''))
-    parameters_map = {'start': 'start', 'end': 'end', 'step': 'step'}
-    defaults = {'start': '1', 'end': '10', 'step': '1'}
+    parameters_map = {'start': 'start', 'end': 'end', 'step': 'step', 'start-label': 'start-label', 'end-label': 'end-label'}
+    defaults = {'start': '1', 'end': '10', 'step': '1', 'start-label': '', 'end-label': ''}
+    number_parameters_map = {'start': 'start', 'end': 'end', 'step': 'step'}
     params = {}
 
     for param in parameters:
@@ -278,9 +279,14 @@ def process_range_question_type(row):
         if key not in params:
             params[key] = defaults[key]
 
+    # TODO: checking data type for the string part needs to be ignored
     try:
-        has_float = any(
-            [float(x) and '.' in str(x) for x in params.values()])
+        bool_list = []
+        for k, x in params.iteritems():
+            if number_parameters_map.has_key(k):
+                bool_list.append(float(x) and '.' in str(x))
+
+        has_float = any(bool_list)
     except ValueError:
         raise PyXFormError("Range parameters 'start', "
                            "'end' or 'step' must all be numbers.")
